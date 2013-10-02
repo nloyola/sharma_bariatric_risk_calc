@@ -6,7 +6,7 @@
  *
  * This file should be placed in:
  *
- *   <wordpress_dir>/wp-content/<current_theme>/page_templates/
+ *   <wordpress_dir>/wp-content/themes/<current_theme>/page_templates/
  */
 
 get_header(); ?>
