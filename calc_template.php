@@ -1,8 +1,8 @@
 <?php
 /**
- * Template Name: Sharma Mortality Risk Calculator
+ * Template Name: Sharma Bariatric Risk Calculator
  *
- * Description:
+ * Description: Calculates rish of death based on user's input.
  *
  */
 
@@ -22,20 +22,20 @@ get_header(); ?>
 
    if (isset($_POST) && array_key_exists('save', $_POST)) {
       if ($_POST['save'] == 'Submit') {
-         // debugVar($_POST);
+         //debugVar($_POST);
 
          $age          = $_POST['age'];
-         $gender       = $_POST['gender'];
+         $sex          = $_POST['sex'];
          $has_diabetes = $_POST['has_diabetes'];
          $is_smoker    = $_POST['is_smoker'];
 
-         if (validInput($age, $gender, $has_diabetes, $is_smoker)) {
-            $has_diabetes = ($_POST['has_diabetes'] == 'on');
-            $is_smoker    = ($_POST['is_smoker'] == 'on');
+         if (validInput($age, $sex, $has_diabetes, $is_smoker)) {
+            $has_diabetes = ($_POST['has_diabetes'] == 'yes');
+            $is_smoker    = ($_POST['is_smoker'] == 'yes');
 
-            $points = mortalityRiskCalc($age, $gender, $has_diabetes, $is_smoker);
+            $points = mortalityRiskCalc($age, $sex, $has_diabetes, $is_smoker);
 
-            echo renderResults($age, ucfirst($gender),
+            echo renderResults($age, ucfirst($sex),
                                $has_diabetes ? "Yes" : "No",
                                $is_smoker ? "Yes" : "No",
                                $points,
@@ -94,18 +94,18 @@ function debugVar($var) {
  * My risk of dying in the next 10 years is 2% or 1 in 50
  */
 
-function validInput($age, $gender, $has_diabetes, $is_smoker) {
+function validInput($age, $sex, $has_diabetes, $is_smoker) {
    return is_numeric($age)
       && (($age > 0) && ($age < 120))
-      && (($gender == 'male') || ($gender == 'female'))
-      && (($has_diabetes == 'on') || ($has_diabetes == ''))
-      && (($is_smoker == 'on') || ($is_smoker == ''));
+      && (($sex == 'male') || ($sex == 'female'))
+      && (($has_diabetes == 'yes') || ($has_diabetes == 'no'))
+      && (($is_smoker == 'yes') || ($is_smoker == 'no'));
 }
 
-function mortalityRiskCalc($age, $gender, $has_diabetes, $is_smoker) {
+function mortalityRiskCalc($age, $sex, $has_diabetes, $is_smoker) {
    $points = 0;
    if ($age > 18) { $points += $age - 18; }
-   if ($gender == "male") { $points += 6; }
+   if ($sex == "male") { $points += 6; }
    if ($has_diabetes) { $points += 10; }
    if ($is_smoker) { $points += 6; }
 
@@ -135,7 +135,7 @@ function renderInvalidInput($link) {
 HTML_INVALID_INPUT;
 }
 
-function renderResults($age, $gender, $has_diabetes, $is_smoker, $points, $risk) {
+function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
    return <<<HTML_RESULT
 <h3>Results</h3>
 <table style="width:75%;" class="form-table">
@@ -145,8 +145,8 @@ function renderResults($age, $gender, $has_diabetes, $is_smoker, $points, $risk)
 <td>$age</td>
 </tr>
 <tr valign="top">
-<th scope="row">Gender</th>
-<td>$gender</td>
+<th scope="row">Sex</th>
+<td>$sex</td>
 </tr>
 <tr valign="top">
 <th scope="row">Type 2 Diabetes</th>
@@ -160,6 +160,7 @@ function renderResults($age, $gender, $has_diabetes, $is_smoker, $points, $risk)
 </table>
 <p><strong>Total score: $points points</strong></p>
 <p><strong>Risk of dying in the next 10 years is $risk%.</strong></p>
+<p><a href=""><button type="button">Reset</button></a>
 HTML_RESULT;
 }
 
