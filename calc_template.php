@@ -156,7 +156,7 @@ function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
 <td>$has_diabetes</td>
 </tr>
 <tr valign="top">
-<th scope="row">Smoker</th>
+<th scope="row">Current smoker</th>
 <td>$is_smoker</td>
 </tr>
 </tbody>
