@@ -4,6 +4,9 @@
  *
  * Description: Calculates rish of death based on user's input.
  *
+ * This file should be placed in:
+ *
+ *   <wordpress_dir>/wp-content/<current_theme>/page_templates/
  */
 
 get_header(); ?>
