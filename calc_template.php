@@ -49,16 +49,16 @@ get_header(); ?>
 ?>
 
    </div>
+   <?php include("left.php"); ?>
    </div>
 
    <div id="wrapper">
+   <?php include("right.php"); ?>
    </div>
 
    </div>
-
 
 <?php get_footer(); ?>
-
 
 <?php
 
@@ -138,7 +138,7 @@ HTML_INVALID_INPUT;
 
 function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
    return <<<HTML_RESULT
-<h3>Results</h3>
+<h2>Bariatric Risk Calculator - Results</h2>
 <table style="width:75%;" class="form-table">
 <tbody>
 <tr valign="top">
@@ -167,6 +167,7 @@ HTML_RESULT;
 
 function renderForm() {
    return <<<HTML_FORM
+<h2>Bariatric Risk Calculator</h2>
 <form action="" method="POST">
 <table class="form-table">
 <tbody>
