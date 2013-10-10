@@ -16,6 +16,8 @@ get_header(); ?>
 
    <div id="content">
 
+   <h2>Bariatric Mortality Risk Calculator</h2>
+
 <?php
 
    if (isset($_POST) && array_key_exists('save', $_POST)) {
@@ -38,12 +40,14 @@ get_header(); ?>
                                $is_smoker ? "Yes" : "No",
                                $points,
                                tenYearMortalityRisk($points));
+            echo calcExplanation();
          } else {
             echo renderInvalidInput('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
          }
       }
    } else {
       echo renderForm();
+      echo calcExplanation();
    }
 
 ?>
@@ -114,15 +118,15 @@ function mortalityRiskCalc($age, $sex, $has_diabetes, $is_smoker) {
 }
 
 function tenYearMortalityRisk($points) {
-   $result = 0;
+   $result = array(0, '');
    if ($points < 20) {
-      $result = 0.2;
+      $result = '0.2% or 1 in 500';
    } else if (($points >= 20) && ($points < 40)) {
-      $result = 0.9;
+      $result = '0.9% or less than 1 in 100';
    } else if (($points >= 40) && ($points < 60)) {
-      $result = 2.0;
+      $result = '2% or 1 in 50';
    } else if ($points >= 60) {
-      $result = 5.2;
+      $result = '5.2% or greater than 1 in 20';
    }
    return $result;
 }
@@ -138,7 +142,7 @@ HTML_INVALID_INPUT;
 
 function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
    return <<<HTML_RESULT
-<h2>Bariatric Risk Calculator - Results</h2>
+<h3>Results</h3>
 <table style="width:75%;" class="form-table">
 <tbody>
 <tr valign="top">
@@ -159,15 +163,18 @@ function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
 </tr>
 </tbody>
 </table>
-<p><strong>Total score: $points points</strong></p>
-<p><strong>Risk of dying in the next 10 years is $risk%.</strong></p>
+<p><strong>Total score: $points points out of 107</strong></p>
+<p><strong>Risk of dying in the next 10 years is $risk.</strong></p>
 <p><a href=""><button type="button">Reset</button></a>
 HTML_RESULT;
 }
 
 function renderForm() {
    return <<<HTML_FORM
-<h2>Bariatric Risk Calculator</h2>
+<p>The following parameters predicts the risk in men and women meeting current criteria for
+bariatric surgery (BMI &ge; 35 kg/m<sup>2</sup> or BMI  &ge; 30 kg/m<sup>2</sup> and a weight-related
+illness<sup>*</sup>)</p>
+
 <form action="" method="POST">
 <table class="form-table">
 <tbody>
@@ -199,6 +206,28 @@ function renderForm() {
 </table>
 </form>
 HTML_FORM;
+}
+
+function calcExplanation() {
+   return <<<HTML_CALC_EXPLANATION
+<p>This simple 4-variable clinical prediction rule for mortality risk in men and women eligible for
+bariatric surgery is based on an analysis of rates and correlates of all-cause mortality in over
+15,000 participants in the UK General Practice Research Database (UK-GPRD) between January 1, 1988,
+through December 31, 1998.</p>
+
+<div class="disclaimers" style="font-size:0.9em;">
+<p><sup>*</sup>Weight-related illnesses used to define eligibility for surgery: hypertension, dyslipidemia, heart
+failure, type 2 diabetes mellitus, sleep apnea, osteoarthritis, coronary artery disease, and
+cerebrovascular disease.</p>
+
+<p>Reference: Padwal RS, Klarenback SW, Wang X, Sharma AM, Karmali S, Birch DW, Majumdar SR. A simple
+prediction rule for all-cause mortality in a cohort eligible for bariatric surgery. JAMA Surgery,
+October 16, 2013</p>
+
+<p>Disclaimer: This prediction rule is for information only. It should not be construed as health
+advice. Your risk and treatment decisions should be discussed with your health professional.</p>
+</div>
+HTML_CALC_EXPLANATION;
 }
 
 ?>
