@@ -10,17 +10,12 @@
  */
 
 get_header(); ?>
-<div id="primary" class="site-content">
-   <div id="content" role="main">
 
-<?php if (have_posts()) : while (have_posts()) : the_post();?>
-<?php if ( has_post_thumbnail() ) : ?>
-   <div class="entry-page-image">
-<?php the_post_thumbnail(); ?>
-   </div><!-- .entry-page-image -->
-<?php endif; ?>
 
-   <div class="entry-content">
+<div id="lilwrapper">
+
+   <div id="content">
+
 <?php
 
    if (isset($_POST) && array_key_exists('save', $_POST)) {
@@ -48,19 +43,22 @@ get_header(); ?>
          }
       }
    } else {
-      get_template_part( 'content', 'page' );
+      echo renderForm();
    }
 
 ?>
 
-<?php endwhile; endif; ?>
+   </div>
+   </div>
 
-</div>
-</div><!-- #content -->
-</div><!-- #primary -->
+   <div id="wrapper">
+   </div>
 
-<?php get_sidebar( 'front' ); ?>
+   </div>
+
+
 <?php get_footer(); ?>
+
 
 <?php
 
@@ -165,6 +163,41 @@ function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
 <p><strong>Risk of dying in the next 10 years is $risk%.</strong></p>
 <p><a href=""><button type="button">Reset</button></a>
 HTML_RESULT;
+}
+
+function renderForm() {
+   return <<<HTML_FORM
+<form action="" method="POST">
+<table class="form-table">
+<tbody>
+<tr valign="top">
+<th scope="row"><label for="age">Age</label></th>
+<td><input type="text" maxlength="3" name="age" size="10" /></td>
+</tr>
+<tr valign="top">
+<th scope="row"><label for="sex">Sex</label></th>
+<td><input type="radio" name="sex" value="male" /> Male
+<input type="radio" name="sex" value="female" /> Female</td>
+</tr>
+<tr valign="top">
+<th scope="row"><label for="has_diabetes">Type 2 diabetes</label></th>
+<td><input type="radio" name="has_diabetes" value="yes" /> Yes
+<input type="radio" name="has_diabetes" value="no" /> No</td>
+</tr>
+<tr valign="top">
+<th scope="row"><label for="is_smoker">Current smoker</label></th>
+<td><input type="radio" name="is_smoker" value="yes" /> Yes
+<input type="radio" name="is_smoker" value="no" /> No</td>
+</tr>
+<tr valign="top">
+<td></td>
+<td><input class="button-primary" type="submit" name="save" value="Submit" />
+<input class="button-secondary" type="submit" name="reset" value="Reset" /></td>
+</tr>
+</tbody>
+</table>
+</form>
+HTML_FORM;
 }
 
 ?>
