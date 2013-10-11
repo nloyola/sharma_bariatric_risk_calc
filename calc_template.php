@@ -143,7 +143,8 @@ HTML_INVALID_INPUT;
 function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
    return <<<HTML_RESULT
 <h3>Results</h3>
-<table style="width:75%;" class="form-table">
+<div class="sharma-table">
+<table style="width:75%;">
 <tbody>
 <tr valign="top">
 <th scope="row">Age</th>
@@ -163,6 +164,7 @@ function renderResults($age, $sex, $has_diabetes, $is_smoker, $points, $risk) {
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>Total score: $points points out of 107</strong></p>
 <p><strong>Risk of dying in the next 10 years is $risk.</strong></p>
 <p><a href=""><button type="button">Reset</button></a>
@@ -171,12 +173,13 @@ HTML_RESULT;
 
 function renderForm() {
    return <<<HTML_FORM
-<p>The following parameters predicts the risk in men and women meeting current criteria for
+<p>The following parameters predicts the risk in men and women 18-65 years old meeting current criteria for
 bariatric surgery (BMI &ge; 35 kg/m<sup>2</sup> or BMI  &ge; 30 kg/m<sup>2</sup> and a weight-related
 illness<sup>*</sup>)</p>
 
+<div class="sharma-table">
 <form action="" method="POST">
-<table class="form-table">
+<table>
 <tbody>
 <tr valign="top">
 <th scope="row"><label for="age">Age</label></th>
@@ -184,17 +187,17 @@ illness<sup>*</sup>)</p>
 </tr>
 <tr valign="top">
 <th scope="row"><label for="sex">Sex</label></th>
-<td><input type="radio" name="sex" value="male" /> Male
+<td><input type="radio" name="sex" value="male" /> Male<br>
 <input type="radio" name="sex" value="female" /> Female</td>
 </tr>
 <tr valign="top">
 <th scope="row"><label for="has_diabetes">Type 2 diabetes</label></th>
-<td><input type="radio" name="has_diabetes" value="yes" /> Yes
+<td><input type="radio" name="has_diabetes" value="yes" /> Yes<br>
 <input type="radio" name="has_diabetes" value="no" /> No</td>
 </tr>
 <tr valign="top">
 <th scope="row"><label for="is_smoker">Current smoker</label></th>
-<td><input type="radio" name="is_smoker" value="yes" /> Yes
+<td><input type="radio" name="is_smoker" value="yes" /> Yes<br>
 <input type="radio" name="is_smoker" value="no" /> No</td>
 </tr>
 <tr valign="top">
@@ -205,6 +208,7 @@ illness<sup>*</sup>)</p>
 </tbody>
 </table>
 </form>
+</div>
 HTML_FORM;
 }
 
@@ -220,9 +224,9 @@ through December 31, 1998.</p>
 failure, type 2 diabetes mellitus, sleep apnea, osteoarthritis, coronary artery disease, and
 cerebrovascular disease.</p>
 
-<p>Reference: Padwal RS, Klarenback SW, Wang X, Sharma AM, Karmali S, Birch DW, Majumdar SR. A simple
+<p><i>Reference: Padwal RS, Klarenback SW, Wang X, Sharma AM, Karmali S, Birch DW, Majumdar SR. A simple
 prediction rule for all-cause mortality in a cohort eligible for bariatric surgery. JAMA Surgery,
-October 16, 2013</p>
+October 16, 2013</i></p>
 
 <p>Disclaimer: This prediction rule is for information only. It should not be construed as health
 advice. Your risk and treatment decisions should be discussed with your health professional.</p>
