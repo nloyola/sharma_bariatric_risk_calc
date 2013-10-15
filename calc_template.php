@@ -173,9 +173,9 @@ HTML_RESULT;
 
 function renderForm() {
    return <<<HTML_FORM
-<p>The following parameters predicts the risk in men and women 18-65 years old meeting current criteria for
-bariatric surgery (BMI &ge; 35 kg/m<sup>2</sup> or BMI  &ge; 30 kg/m<sup>2</sup> and a weight-related
-illness<sup>*</sup>)</p>
+<p>The following parameters predict the risk for all-cause mortality in men and women 18-65 years old
+meeting current criteria for bariatric surgery (BMI &ge; 35 kg/m<sup>2</sup> or BMI  &ge; 30 kg/m<sup>2</sup>
+and a weight-related illness<sup>*</sup>)</p>
 
 <div class="sharma-table">
 <form action="" method="POST">
